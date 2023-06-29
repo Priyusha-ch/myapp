@@ -3,8 +3,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken'); 
+const cookieParser = require('cookie-parser');
+const {AuthenticateToken} = require('./JwtAuth.js')
 
 const app = express();
+app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 
@@ -65,23 +68,45 @@ app.post('/api/signup', async (req, res) => {
 
 
 app.post('/api/login', async (req, res) => {
-    try {
-      const { email, password } = req.body;
-      const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
-    const token = jwt.sign({ userId: user._id }, 'your-secret-key');
-    res.status(200).json({ message: 'Login successful', token });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to perform login' });
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(401).json({ error: 'Invalid email or password' });
+  }
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    return res.status(401).json({ error: 'Invalid email or password' });
+  }
+  const token = jwt.sign({ userId: user._id }, 'your-secret-key');
+  res.cookie("Authentication", token,{
+      httpOnly: true
+  });
+  res.status(200).json({ message: 'Login successful', token });
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Failed to perform login' });
   }
 });
+
+app.delete('/api/contacts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await collection.deleteOne({ id: id  });
+    res.json(result.deletedCount);
+  } catch (error) {
+    console.error('Failed to delete contact:', error);
+    res.status(500).json({ error: 'Failed to delete contact' });
+  }
+});
+
+
+// app.post('/api/add', AuthenticateToken, sync(req, res)=> {
+//  const id =re.body;
+//  const {name,email,password} = req.body;
+//  await user.save();
+// })
+
 
 app.listen(3006, () => {
     console.log('Server is running on port 3006');

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import { signUpUser } from "../api/contacts";
 
 const SignUp = () => {
@@ -7,6 +7,7 @@ const SignUp = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
+  const navigate = useNavigate("");
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,6 +18,7 @@ const SignUp = () => {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const confirmPassword = confirmPasswordRef.current.value;
+    
 
     // Perform validation
     if (!username || !email || !password || !confirmPassword) {
@@ -32,16 +34,17 @@ const SignUp = () => {
    
     try {
       
-      await signUpUser ('/api/signup', {
+      await signUpUser ( 
         username,
         email,
         password,
-      });
+      );
       userRef.current.value = '';
       emailRef.current.value = '';
       passwordRef.current.value = '';
       confirmPasswordRef.current.value = '';
       alert('Registration successful!');
+      navigate('/Login');
     } catch (error) {
       console.error(error);
       alert('Failed to register user');

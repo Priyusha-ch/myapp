@@ -6,13 +6,16 @@ import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import Login from "./Login";
 import { useAuth0 } from "@auth0/auth0-react";
-import { fetchContacts, addContact } from "../api/contacts";
+import { fetchContacts, addContact, deleteContact } from "../api/contacts";
 import Home from "./Home";
 import SignUp from "./SignUp";
+import ContactDetail from "./ContactDetail";
 
 function App() {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState(() => {
@@ -57,22 +60,53 @@ function App() {
     }
   };
   
+  const searchHandler = (serachTerm) => {
+    setSearchTerm(searchTerm);
+    if(searchTerm !== "") {
+      const newContactList = contacts.filter((contact) => {
+        return Object.values(contact)
+        .join("")
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newContactList);
+    } else {
+      setSearchResults(contacts);
+    };
+  };
+  const removeContactHandler = async (id) => {
+    await deleteContact(id);
+    const newContactList = contacts.filter((contact) => contact.id !==id);
+    setContacts(newContactList);
+  };
 
   if (isLoading) {
     return <div>Loading ...</div>;
-  }
+  };
 
   return (
     <Router>
+      <div>
       <Header />
       <div className="container">
         <Routes>
           <Route path="/" element={<Home />} />
-          {!isAuthenticated && <Route path="/login" element={<Login/>}/>}
-          {!isAuthenticated && <Route path="/sign_up" element={<SignUp/>}/>}
-          {!isAuthenticated && <Route path="/add" element={<AddContact addContactHandler={addContactHandler} />} />}
-          {!isAuthenticated && <Route path="/contact-list" element={<ContactList currentPage={currentPage} setPage={setCurrentPage} />} />}
+        {!isAuthenticated && <Route path="/login" element={<Login/>}/>}
+        {!isAuthenticated && <Route path="/sign_up" element={<SignUp/>}/>}
+        {!isAuthenticated && <Route path="/contact-list" 
+                  element={
+                  <ContactList
+                    searchResults={searchTerm.length < 1 ? contacts : searchResults}
+                    getContactId={removeContactHandler}
+                    term={searchTerm}
+                    searchKeyWord={searchHandler}
+                    currentPage={currentPage} setPage={setCurrentPage} 
+                  />}
+        />}
+        {isAuthenticated && <Route path="/add" element={<AddContact addContactHandler={addContactHandler} />} />}
+        {isAuthenticated && <Route path="/contact/:id" element={<ContactDetail contacts={contacts}/>}/>}
         </Routes>
+      </div>
       </div>
     </Router>
   );

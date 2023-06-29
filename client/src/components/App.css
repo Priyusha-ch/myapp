@@ -108,7 +108,7 @@
 
 
 
-.main {
+/* .main {
   display: flex;
   flex-direction: column;
 }
@@ -164,7 +164,7 @@
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+} */
 
 
 .registration-form {
@@ -214,4 +214,261 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+/* .contact-table-container{
+  width: 100%;
+}
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+}
+.contact-table th,
+.contact-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.contact-table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+.contact-table td {
+  vertical-align: middle;
+}
+.contact-table .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.contact-table .header {
+  font-weight: bold;
+}
+.contact-table .corner-icon i {
+  margin-left: 5px;
+  cursor: pointer;
+} */
+.avatar {
+  width: 20px;
+  padding: 5px;
+}
+.name {
+  padding: 5px;
+}
+
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  justify-content:space-between;
+  flex: auto;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+.contactCard {
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  padding: 10px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  box-shadow: none;
+}
+.contactCard img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.contact-card .content {
+  margin-left: 10px;
+}
+.contact-card .header {
+  font-weight: bold;
+}
+.contact-card span {
+  color: #999999;
+}
+.contact-card .corner-icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.contact-card .corner-icon i {
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+}
+.ui.card {
+  width: 300px;
+  margin-bottom: 20px;
+}
+.image {
+  text-align: center;
+}
+.image img {
+  width: 100%;
+  height: auto;
+}
+.content {
+  padding: 10px;
+  text-align: center;
+}
+.header {
+  font-size: 20px;
+  font-weight: bold;
+}
+.description {
+  margin-top: 10px;
+}
+.center-div {
+  text-align: center;
+  margin-top: 20px;
+}
+.ui.button {
+  margin-left: 480px;
+}
+
+/* .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin-right: 5px;
+}
+.pagination button:last-child {
+  margin-right: 0;
+}
+button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+} */
+
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.contact-heading {
+  margin: 0;
+}
+
+.buttonStyle {
+  background-color: blue;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.ui {
+  margin-bottom: 10px;
+  width: 90%;
+}
+
+.icon {
+  font-size: 20px;
+  margin-left: -30px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.prompt {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:hover {
+  background-color: #ddd;
+}
+
+.contact-table-container {
+  width: 100%;
+}
+
+.contact-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contact-table th,
+.contact-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.contact-table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.contact-table td {
+  vertical-align: middle;
+}
+
+.contact-table .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.contact-table .header {
+  font-weight: bold;
+}
+
+.contact-table .corner-icon i {
+  margin-left: 5px;
+  cursor: pointer;
 }
